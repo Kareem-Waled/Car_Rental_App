@@ -1,0 +1,119 @@
+<div class="container mt-4">
+    <div class="row">
+        <div [className]="isSidePanelVisible ? 'col-md-8' : 'col-md-12'">
+            <div class="card shadow-sm">
+                <div class="card-header bg-success text-white">
+                    <div class="row align-items-center">
+                        <div class="col-6">
+                            <h5 class="mb-0">Car List</h5>
+                        </div>
+                        <div class="col-6 text-end">
+                            <button class="btn btn-primary" (click)="isSidePanelVisible = true">Add new</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Sr No</th>
+                                <th>Customer</th>
+                                <th>Car</th>
+                                <th>Rent Type</th>
+                                <th>Duration</th>
+                                <th>No Of Cars</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (item of bookingList; track item.bookingId; let sr = $index) {
+                                <tr>
+                                    <td>{{sr + 1}}</td>
+                                    <td>
+                                        {{item.customerName}}<br>
+                                        <small class="text-muted">{{item.mobileNo}}</small>
+                                    </td>
+                                    <td>{{item.carName}}</td>
+                                    <td>{{item.rentType}}</td>
+                                    <td>{{item.rentDuration}}</td>
+                                    <td>{{item.noOfCars}}</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        @if (isSidePanelVisible) {
+            <div class="col-md-4 mt-4 mt-md-0">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-success text-white">
+                        <div class="row align-items-center">
+                            <div class="col-6">
+                                <h5 class="mb-0">New Car</h5>
+                            </div>
+                            <div class="col-6 text-end">
+                                <button class="btn btn-primary" (click)="isSidePanelVisible = false">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form>
+                            <div class="row mb-3">
+                                <div class="col-6">
+                                    <label for="customerName" class="form-label">Customer Name</label>
+                                    <input type="text" id="customerName" [(ngModel)]="bookingObj.customerName" class="form-control">
+                                </div>
+                                <div class="col-6">
+                                    <label for="mobileNo" class="form-label">Mobile No</label>
+                                    <input type="number" id="mobileNo" maxlength="10" [(ngModel)]="bookingObj.mobileNo" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-6">
+                                    <label for="carId" class="form-label">Select Car</label>
+                                    <select id="carId" class="form-select" [(ngModel)]="bookingObj.carId">
+                                        @for (item of carList; track $index) {
+                                            <option [value]="item.carId">{{item.carName}}</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="col-6">
+                                    <label for="bookingDate" class="form-label">Booking Date</label>
+                                    <input type="date" id="bookingDate" [(ngModel)]="bookingObj.bookingDate" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-6">
+                                    <label for="rentType" class="form-label">Rent Type</label>
+                                    <select id="rentType" class="form-select" [(ngModel)]="bookingObj.rentType">
+                                        <option value="">Select</option>
+                                        <option value="Per Day">Per Day</option>
+                                        <option value="Per Hr">Per Hr</option>
+                                    </select>
+                                </div>
+                                <div class="col-6">
+                                    <label for="rentDuration" class="form-label">Rent Duration</label>
+                                    <input type="number" id="rentDuration" [(ngModel)]="bookingObj.rentDuration" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-6">
+                                    <label for="noOfCars" class="form-label">No Of Cars</label>
+                                    <input type="number" id="noOfCars" [(ngModel)]="bookingObj.noOfCars" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row pt-3">
+                                <div class="col-6 text-center">
+                                    <button type="button" class="btn btn-secondary" (click)="onReset()">Reset</button>
+                                </div>
+                                <div class="col-6 text-center">
+                                    <button type="button" class="btn btn-success" (click)="onBookingSave()">Save</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
